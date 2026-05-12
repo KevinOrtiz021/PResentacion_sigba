@@ -344,10 +344,9 @@
 })();
 
 /* ══════════════════════════════════════════════════════════
-   MEJORAS FINALES — QR portada + Fullscreen F11
+   MEJORAS FINALES v4 — QR portada + Fullscreen F11
    ══════════════════════════════════════════════════════════ */
 
-/* URL del proyecto */
 var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
 
 /* ── QR EN PORTADA ─────────────────────────────────────── */
@@ -359,8 +358,7 @@ var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
     if (!canvas || typeof QRious === 'undefined') return;
     var val = (url && url.trim()) ? url.trim() : SIGBA_PROJECT_URL;
     try {
-      /* Tamaño: 150 en PC (≥901px), 120 en tablet/móvil */
-      var sz = window.innerWidth >= 901 ? 150 : 120;
+      var sz = window.innerWidth >= 901 ? 150 : 110;
       new QRious({
         element: canvas,
         value: val,
@@ -372,12 +370,11 @@ var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
     } catch (e) { console.warn('Cover QR:', e); }
   }
 
-  function init() {
+  window.addEventListener('load', function () {
     var input = document.getElementById('cover-qr-url-input');
     var btn   = document.getElementById('btn-cover-qr-gen');
     if (!input) return;
 
-    /* URL automática: si estamos en servidor usamos esa, si no la del proyecto */
     var href = window.location.href;
     var auto = (href.indexOf('http') === 0)
       ? href.split('?')[0].split('#')[0]
@@ -391,7 +388,6 @@ var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
       if (e.key === 'Enter') drawCoverQR(input.value);
     });
 
-    /* Sincronizar cuando el modal principal genera un QR */
     var modalGenBtn = document.getElementById('btn-qr-gen');
     if (modalGenBtn) {
       modalGenBtn.addEventListener('click', function () {
@@ -402,50 +398,37 @@ var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
         }
       });
     }
-  }
-
-  /* Esperar a que QRious esté listo */
-  window.addEventListener('load', init);
-
+  });
 })();
 
-/* ── FULLSCREEN: ocultar sidebar con F11 ───────────────── */
+/* ── FULLSCREEN: ocultar sidebar y corregir margen ──────── */
 (function () {
   'use strict';
 
   var fsActive = false;
 
-  function applyFS(active) {
-    var sidebar = document.getElementById('sidebar');
-    var main    = document.getElementById('main');
-    var bar     = document.getElementById('progress-bar');
-    if (!sidebar) return;
+  function enterFS() {
+    if (fsActive) return;
+    fsActive = true;
+    document.body.classList.add('sidebar-hidden');
+  }
 
-    if (active) {
-      fsActive = true;
-      sidebar.style.transform  = 'translateX(-280px)';
-      sidebar.style.visibility = 'hidden';
-      if (main) main.style.marginLeft = '0';
-      if (bar)  bar.style.left        = '0';
-    } else {
-      fsActive = false;
-      /* Solo restaurar en PC/tablet; en móvil el CSS ya maneja todo */
-      if (window.innerWidth >= 901) {
-        sidebar.style.transform  = '';
-        sidebar.style.visibility = '';
-        if (main) main.style.marginLeft = '';
-        if (bar)  bar.style.left        = '';
-      }
+  function exitFS() {
+    if (!fsActive) return;
+    fsActive = false;
+    /* En móvil el sidebar siempre está oculto por CSS, no restaurar */
+    if (window.innerWidth >= 901) {
+      document.body.classList.remove('sidebar-hidden');
     }
   }
 
-  /* Evento nativo fullscreenchange (cubre Fullscreen API y algunos casos de F11) */
+  /* Evento nativo (cubre Fullscreen API) */
   function onFSChange() {
     var el = document.fullscreenElement
           || document.webkitFullscreenElement
           || document.mozFullScreenElement
           || document.msFullscreenElement;
-    applyFS(!!el);
+    el ? enterFS() : exitFS();
   }
 
   document.addEventListener('fullscreenchange',       onFSChange);
@@ -453,23 +436,13 @@ var SIGBA_PROJECT_URL = 'https://p-resentacion-sigba.vercel.app/';
   document.addEventListener('mozfullscreenchange',    onFSChange);
   document.addEventListener('MSFullscreenChange',     onFSChange);
 
-  /* F11 en Chrome/Edge no dispara fullscreenchange.
-     Polling de tamaño: si la ventana cubre toda la pantalla → fullscreen.
-     Intervalo corto (250ms) para reacción rápida. */
-  var lastW = screen.width;
-  var lastH = screen.height;
-
+  /* Polling para F11 nativo de Chrome/Edge que no dispara fullscreenchange */
   setInterval(function () {
-    var w  = window.outerWidth  || window.innerWidth;
-    var h  = window.outerHeight || window.innerHeight;
-    var sw = screen.width;
-    var sh = screen.height;
-
-    /* Consideramos fullscreen si ocupa ≥98% de la pantalla */
-    var isFS = (w >= sw * 0.98 && h >= sh * 0.98);
-
-    if (isFS && !fsActive)  applyFS(true);
-    if (!isFS && fsActive)  applyFS(false);
+    var w    = window.outerWidth  || window.innerWidth;
+    var h    = window.outerHeight || window.innerHeight;
+    var isFS = (w >= screen.width * 0.98 && h >= screen.height * 0.98);
+    if (isFS && !fsActive) enterFS();
+    if (!isFS && fsActive) exitFS();
   }, 250);
 
 })();

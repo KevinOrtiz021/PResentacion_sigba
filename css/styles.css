@@ -1969,16 +1969,60 @@ body {
   .sena-logo-box img { width: 60px; height: 60px; }
 }
 /* ══════════════════════════════════════════════════════════
-   MEJORAS SOLICITADAS
+   MEJORAS v2 — Slides más grandes (PC/tablet), QR portada
    ══════════════════════════════════════════════════════════ */
 
-/* ── 1. FULLSCREEN: ocultar sidebar con F11 ──────────────── */
+/* ── SLIDES: más grandes en PC y tablet ─────────────────── */
+@media (min-width: 768px) {
+  #slides-area {
+    padding: 12px 12px 60px !important;
+    max-width: 100% !important;
+  }
+
+  .slide-cover {
+    min-height: 72vh;
+  }
+
+  .slide-cover-content {
+    padding: 36px 44px 32px;
+  }
+
+  .slide-content-header {
+    padding: 20px 36px;
+  }
+
+  .slide-content-body {
+    padding: 28px 36px;
+  }
+
+  .cover-title {
+    font-size: clamp(28px, 3.8vw, 50px);
+  }
+}
+
+/* Extra grande en desktop ≥1024px */
+@media (min-width: 1024px) {
+  #slides-area {
+    padding: 10px 10px 60px !important;
+  }
+
+  .slide-cover {
+    min-height: 78vh;
+  }
+
+  .slide-cover-content {
+    padding: 40px 52px 36px;
+  }
+}
+
+/* ── FULLSCREEN (F11): ocultar sidebar ───────────────────── */
 :fullscreen #sidebar,
 :-webkit-full-screen #sidebar,
 :-moz-full-screen #sidebar,
 :-ms-fullscreen #sidebar {
   transform: translateX(-280px) !important;
   pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 :fullscreen #main,
@@ -1995,90 +2039,93 @@ body {
   left: 0 !important;
 }
 
-:fullscreen #topbar,
-:-webkit-full-screen #topbar,
-:-moz-full-screen #topbar,
-:-ms-fullscreen #topbar {
-  padding-left: 16px !important;
+:fullscreen #slides-area,
+:-webkit-full-screen #slides-area,
+:-moz-full-screen #slides-area,
+:-ms-fullscreen #slides-area {
+  padding: 8px 8px 60px !important;
 }
 
-/* ── 2. SLIDES MÁS GRANDES: reducir padding, más ancho ───── */
-#slides-area {
-  padding: 16px 16px 70px !important;
-  max-width: 100% !important;
-}
-
-.slide-cover {
-  min-height: 620px;
-}
-
-.slide-content-body {
-  padding: 28px 32px;
-}
-
-.slide-content-header {
-  padding: 22px 32px;
-}
-
-.slide-cover-content {
-  padding: 40px 48px;
-}
-
-/* ── 3. QR EN PORTADA: grande debajo del logo SENA ──────── */
+/* ── QR EN PORTADA ───────────────────────────────────────── */
 .cover-sena-badge {
-  top: 28px;
-  right: 36px;
-  gap: 12px;
+  gap: 10px;
 }
 
-.cover-sena-badge > p {
-  font-size: 9px;
-  color: rgba(255,255,255,0.55);
-  text-align: center;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.4;
-  margin: 0;
-}
-
-/* Contenedor del QR en portada */
 .cover-qr-box {
-  background: rgba(255,255,255,0.10);
-  border: 1.5px solid rgba(57,169,0,0.4);
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(57,169,0,0.5);
   border-radius: 12px;
   padding: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
-  backdrop-filter: blur(4px);
 }
 
 .cover-qr-box:hover {
-  background: rgba(57,169,0,0.18);
-  border-color: var(--sena-green);
+  background: rgba(57,169,0,0.2);
+  border-color: #39A900;
 }
 
-.cover-qr-box canvas {
-  border-radius: 8px;
+.cover-qr-box canvas,
+.cover-qr-box img {
+  border-radius: 6px;
   display: block;
 }
 
 .cover-qr-label {
-  font-size: 8.5px;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 1px;
+  font-size: 8px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
 
-/* ── RESPONSIVE fullscreen slides ───────────────────────── */
-@media (min-width: 900px) {
-  #slides-area {
-    padding: 20px 28px 70px !important;
-  }
+/* Input URL del QR en portada */
+.cover-qr-url-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  margin-top: 2px;
 }
+
+.cover-qr-url-input {
+  flex: 1;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(57,169,0,0.4);
+  border-radius: 6px;
+  padding: 4px 7px;
+  font-size: 9px;
+  font-family: monospace;
+  color: rgba(255,255,255,0.85);
+  outline: none;
+  min-width: 0;
+}
+
+.cover-qr-url-input:focus {
+  border-color: #39A900;
+  background: rgba(255,255,255,0.18);
+}
+
+.cover-qr-url-input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.btn-cover-qr-gen {
+  width: 22px; height: 22px;
+  background: #39A900;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+
+.btn-cover-qr-gen:hover { background: #2D8200; }

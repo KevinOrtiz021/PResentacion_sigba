@@ -1968,3 +1968,117 @@ body {
   .cards-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
   .sena-logo-box img { width: 60px; height: 60px; }
 }
+/* ══════════════════════════════════════════════════════════
+   MEJORAS SOLICITADAS
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. FULLSCREEN: ocultar sidebar con F11 ──────────────── */
+:fullscreen #sidebar,
+:-webkit-full-screen #sidebar,
+:-moz-full-screen #sidebar,
+:-ms-fullscreen #sidebar {
+  transform: translateX(-280px) !important;
+  pointer-events: none !important;
+}
+
+:fullscreen #main,
+:-webkit-full-screen #main,
+:-moz-full-screen #main,
+:-ms-fullscreen #main {
+  margin-left: 0 !important;
+}
+
+:fullscreen #progress-bar,
+:-webkit-full-screen #progress-bar,
+:-moz-full-screen #progress-bar,
+:-ms-fullscreen #progress-bar {
+  left: 0 !important;
+}
+
+:fullscreen #topbar,
+:-webkit-full-screen #topbar,
+:-moz-full-screen #topbar,
+:-ms-fullscreen #topbar {
+  padding-left: 16px !important;
+}
+
+/* ── 2. SLIDES MÁS GRANDES: reducir padding, más ancho ───── */
+#slides-area {
+  padding: 16px 16px 70px !important;
+  max-width: 100% !important;
+}
+
+.slide-cover {
+  min-height: 620px;
+}
+
+.slide-content-body {
+  padding: 28px 32px;
+}
+
+.slide-content-header {
+  padding: 22px 32px;
+}
+
+.slide-cover-content {
+  padding: 40px 48px;
+}
+
+/* ── 3. QR EN PORTADA: grande debajo del logo SENA ──────── */
+.cover-sena-badge {
+  top: 28px;
+  right: 36px;
+  gap: 12px;
+}
+
+.cover-sena-badge > p {
+  font-size: 9px;
+  color: rgba(255,255,255,0.55);
+  text-align: center;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Contenedor del QR en portada */
+.cover-qr-box {
+  background: rgba(255,255,255,0.10);
+  border: 1.5px solid rgba(57,169,0,0.4);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.cover-qr-box:hover {
+  background: rgba(57,169,0,0.18);
+  border-color: var(--sena-green);
+}
+
+.cover-qr-box canvas {
+  border-radius: 8px;
+  display: block;
+}
+
+.cover-qr-label {
+  font-size: 8.5px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+/* ── RESPONSIVE fullscreen slides ───────────────────────── */
+@media (min-width: 900px) {
+  #slides-area {
+    padding: 20px 28px 70px !important;
+  }
+}

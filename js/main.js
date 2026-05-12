@@ -342,3 +342,72 @@
   })();
 
 })();
+/* ══════════════════════════════════════════════════════════
+   MEJORAS ADICIONALES
+   ══════════════════════════════════════════════════════════ */
+
+/* ── QR EN PORTADA ─────────────────────────────────────── */
+function generateCoverQR() {
+  const canvas = document.getElementById('cover-qr-canvas');
+  if (!canvas) return;
+
+  const url = detectURL() || window.location.href;
+
+  if (typeof QRious !== 'undefined') {
+    try {
+      new QRious({
+        element: canvas,
+        value: url,
+        size: 110,
+        foreground: '#2D8200',
+        background: 'rgba(0,0,0,0)',
+        backgroundAlpha: 0,
+        level: 'H'
+      });
+      // Set transparent background manually
+      canvas.style.background = 'white';
+      canvas.style.borderRadius = '6px';
+    } catch(e) {
+      console.warn('Cover QR error:', e);
+    }
+  }
+}
+
+/* Generate cover QR on load */
+window.addEventListener('load', function() {
+  generateCoverQR();
+});
+
+/* ── FULLSCREEN (F11) SIDEBAR OCULTO ───────────────────── */
+function handleFullscreenChange() {
+  const isFullscreen = !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement
+  );
+
+  const sidebar = document.getElementById('sidebar');
+  const main = document.getElementById('main');
+  const progressBar = document.getElementById('progress-bar');
+
+  if (isFullscreen) {
+    sidebar.style.transform = 'translateX(-280px)';
+    sidebar.style.pointerEvents = 'none';
+    main.style.marginLeft = '0';
+    if (progressBar) progressBar.style.left = '0';
+  } else {
+    // Restore only if not mobile
+    if (window.innerWidth >= 900) {
+      sidebar.style.transform = '';
+      sidebar.style.pointerEvents = '';
+      main.style.marginLeft = '';
+      if (progressBar) progressBar.style.left = '';
+    }
+  }
+}
+
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);

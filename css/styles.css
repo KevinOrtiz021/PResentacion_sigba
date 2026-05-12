@@ -296,6 +296,7 @@ body {
   overflow: hidden;
   position: relative;
   min-height: 540px;
+  min-width: 540px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

@@ -1969,115 +1969,84 @@ body {
   .sena-logo-box img { width: 60px; height: 60px; }
 }
 /* ══════════════════════════════════════════════════════════
-   MEJORAS v2 — Slides más grandes (PC/tablet), QR portada
+   MEJORAS FINALES
    ══════════════════════════════════════════════════════════ */
 
-/* ── SLIDES: más grandes en PC y tablet ─────────────────── */
-@media (min-width: 768px) {
+/* ── PC y TABLET (≥901px): slides más grandes ────────────
+   Solo afecta pantallas donde el sidebar está visible.
+   El móvil (<900px) ya tiene sus propias reglas arriba y
+   no se toca nada de lo original.                         */
+@media (min-width: 901px) {
+  /* Slides: quitar max-width y reducir padding */
   #slides-area {
-    padding: 12px 12px 60px !important;
-    max-width: 100% !important;
+    padding: 10px 10px 64px;
+    max-width: 100%;
   }
 
+  /* Portada más alta */
   .slide-cover {
-    min-height: 72vh;
+    min-height: 76vh;
   }
 
+  /* Padding interno de la portada */
   .slide-cover-content {
-    padding: 36px 44px 32px;
+    padding: 38px 50px 32px;
   }
 
+  /* Headers y cuerpos de slides de contenido */
   .slide-content-header {
-    padding: 20px 36px;
+    padding: 22px 36px;
   }
 
   .slide-content-body {
     padding: 28px 36px;
   }
-
-  .cover-title {
-    font-size: clamp(28px, 3.8vw, 50px);
-  }
 }
 
-/* Extra grande en desktop ≥1024px */
-@media (min-width: 1024px) {
-  #slides-area {
-    padding: 10px 10px 60px !important;
-  }
+/* ── FULLSCREEN API (botón nativo del navegador o F11) ───
+   Cuando el browser entra en fullscreen, ocultar sidebar  */
+:fullscreen #sidebar            { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+:-webkit-full-screen #sidebar   { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+:-moz-full-screen #sidebar      { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+:-ms-fullscreen #sidebar        { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
 
-  .slide-cover {
-    min-height: 78vh;
-  }
+:fullscreen #main               { margin-left: 0 !important; }
+:-webkit-full-screen #main      { margin-left: 0 !important; }
+:-moz-full-screen #main         { margin-left: 0 !important; }
+:-ms-fullscreen #main           { margin-left: 0 !important; }
 
-  .slide-cover-content {
-    padding: 40px 52px 36px;
-  }
-}
+:fullscreen #progress-bar       { left: 0 !important; }
+:-webkit-full-screen #progress-bar { left: 0 !important; }
+:-moz-full-screen #progress-bar { left: 0 !important; }
+:-ms-fullscreen #progress-bar   { left: 0 !important; }
 
-/* ── FULLSCREEN (F11): ocultar sidebar ───────────────────── */
-:fullscreen #sidebar,
-:-webkit-full-screen #sidebar,
-:-moz-full-screen #sidebar,
-:-ms-fullscreen #sidebar {
-  transform: translateX(-280px) !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-}
+:fullscreen #slides-area        { padding: 8px 8px 64px !important; max-width: 100% !important; }
+:-webkit-full-screen #slides-area { padding: 8px 8px 64px !important; max-width: 100% !important; }
+:-moz-full-screen #slides-area  { padding: 8px 8px 64px !important; max-width: 100% !important; }
+:-ms-fullscreen #slides-area    { padding: 8px 8px 64px !important; max-width: 100% !important; }
 
-:fullscreen #main,
-:-webkit-full-screen #main,
-:-moz-full-screen #main,
-:-ms-fullscreen #main {
-  margin-left: 0 !important;
-}
-
-:fullscreen #progress-bar,
-:-webkit-full-screen #progress-bar,
-:-moz-full-screen #progress-bar,
-:-ms-fullscreen #progress-bar {
-  left: 0 !important;
-}
-
-:fullscreen #slides-area,
-:-webkit-full-screen #slides-area,
-:-moz-full-screen #slides-area,
-:-ms-fullscreen #slides-area {
-  padding: 8px 8px 60px !important;
-}
-
-/* ── QR EN PORTADA ───────────────────────────────────────── */
-.cover-sena-badge {
-  gap: 10px;
-}
-
+/* ── QR EN PORTADA ───────────────────────────────────────  */
 .cover-qr-box {
-  background: rgba(255,255,255,0.08);
-  border: 1.5px solid rgba(57,169,0,0.5);
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(57,169,0,0.45);
   border-radius: 12px;
-  padding: 8px;
+  padding: 8px 8px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  cursor: default;
 }
 
-.cover-qr-box:hover {
-  background: rgba(57,169,0,0.2);
-  border-color: #39A900;
-}
-
-.cover-qr-box canvas,
-.cover-qr-box img {
+.cover-qr-box canvas {
   border-radius: 6px;
   display: block;
+  background: #fff;
 }
 
 .cover-qr-label {
   font-size: 8px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.5);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
@@ -2090,42 +2059,33 @@ body {
   align-items: center;
   gap: 4px;
   width: 100%;
-  margin-top: 2px;
 }
 
 .cover-qr-url-input {
   flex: 1;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(57,169,0,0.4);
-  border-radius: 6px;
-  padding: 4px 7px;
+  min-width: 0;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(57,169,0,0.35);
+  border-radius: 5px;
+  padding: 3px 6px;
   font-size: 9px;
   font-family: monospace;
   color: rgba(255,255,255,0.85);
   outline: none;
-  min-width: 0;
 }
 
-.cover-qr-url-input:focus {
-  border-color: #39A900;
-  background: rgba(255,255,255,0.18);
-}
-
-.cover-qr-url-input::placeholder {
-  color: rgba(255,255,255,0.35);
-}
+.cover-qr-url-input:focus { border-color: #39A900; }
+.cover-qr-url-input::placeholder { color: rgba(255,255,255,0.3); }
 
 .btn-cover-qr-gen {
-  width: 22px; height: 22px;
+  width: 20px; height: 20px;
   background: #39A900;
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  font-size: 13px;
+  border-radius: 4px;
+  font-size: 12px;
   cursor: pointer;
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  line-height: 1;
 }
-
 .btn-cover-qr-gen:hover { background: #2D8200; }

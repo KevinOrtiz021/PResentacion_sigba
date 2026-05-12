@@ -343,117 +343,105 @@
 
 })();
 /* ══════════════════════════════════════════════════════════
-   MEJORAS v2
+   MEJORAS FINALES
    ══════════════════════════════════════════════════════════ */
 
+/* URL por defecto del proyecto (se puede editar en portada) */
+var SIGBA_URL = 'https://p-resentacion-sigba.vercel.app/';
+
 /* ── QR EN PORTADA ─────────────────────────────────────── */
-(function initCoverQR() {
+(function () {
 
-  /* Genera el QR en el canvas de portada */
   function drawCoverQR(url) {
-    const canvas = document.getElementById('cover-qr-canvas');
+    var canvas = document.getElementById('cover-qr-canvas');
     if (!canvas) return;
+    if (typeof QRious === 'undefined') return;
+    try {
+      new QRious({
+        element: canvas,
+        value: url && url.trim() ? url.trim() : SIGBA_URL,
+        size: 120,
+        foreground: '#1A1A1A',
+        background: '#FFFFFF',
+        level: 'H'
+      });
+    } catch (e) { console.warn('QR portada:', e); }
+  }
 
-    if (!url || url.trim() === '') {
-      // Placeholder con icono si no hay URL
-      canvas.width  = 120;
-      canvas.height = 120;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'rgba(255,255,255,0.08)';
-      ctx.fillRect(0,0,120,120);
-      ctx.fillStyle = 'rgba(57,169,0,0.5)';
-      ctx.font = 'bold 40px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('QR', 60, 72);
-      return;
-    }
+  function init() {
+    var input = document.getElementById('cover-qr-url-input');
+    var btn   = document.getElementById('btn-cover-qr-gen');
+    if (!input) return;
 
-    if (typeof QRious !== 'undefined') {
-      canvas.width  = 120;
-      canvas.height = 120;
-      try {
-        new QRious({
-          element: canvas,
-          value: url.trim(),
-          size: 120,
-          foreground: '#1A1A1A',
-          background: '#FFFFFF',
-          level: 'H'
-        });
-      } catch(e) {
-        console.warn('Cover QR error:', e);
-      }
+    /* Prefill con URL real si está en servidor, o con la URL del proyecto */
+    var href = window.location.href;
+    var autoURL = (href.startsWith('http://') || href.startsWith('https://'))
+      ? href.split('?')[0].split('#')[0]
+      : SIGBA_URL;
+
+    input.value = autoURL;
+    drawCoverQR(autoURL);
+
+    if (btn) btn.addEventListener('click', function () { drawCoverQR(input.value); });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') drawCoverQR(input.value); });
+
+    /* Sincronizar cuando el modal principal genera un QR */
+    var modalBtn = document.getElementById('btn-qr-gen');
+    if (modalBtn) {
+      modalBtn.addEventListener('click', function () {
+        var mi = document.getElementById('qr-url-input');
+        if (mi && mi.value.trim()) { input.value = mi.value.trim(); drawCoverQR(mi.value.trim()); }
+      });
     }
   }
 
-  /* Detecta la mejor URL inicial */
-  function bestURL() {
-    const href = window.location.href;
-    if (href.startsWith('http://') || href.startsWith('https://')) {
-      return href.split('?')[0].split('#')[0];
-    }
-    return ''; // archivo local: usuario debe ingresar
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
-  window.addEventListener('load', function() {
-    const input  = document.getElementById('cover-qr-url-input');
-    const btn    = document.getElementById('btn-cover-qr-gen');
-    if (!input || !btn) return;
-
-    const url = bestURL();
-    if (url) {
-      input.value = url;
-      drawCoverQR(url);
-    } else {
-      drawCoverQR(''); // placeholder
-    }
-
-    btn.addEventListener('click', function() {
-      drawCoverQR(input.value);
-    });
-
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') drawCoverQR(input.value);
-    });
-
-    // Sincronizar con el modal: cuando el modal genera un QR, actualizar portada
-    document.getElementById('btn-qr-gen')?.addEventListener('click', function() {
-      const modalInput = document.getElementById('qr-url-input');
-      if (modalInput && modalInput.value) {
-        input.value = modalInput.value;
-        drawCoverQR(modalInput.value);
-      }
-    });
-  });
+  /* También re-generar cuando la librería QRious cargue (puede ser después) */
+  window.addEventListener('load', function () { drawCoverQR(document.getElementById('cover-qr-url-input') ? document.getElementById('cover-qr-url-input').value : SIGBA_URL); });
 
 })();
 
-/* ── FULLSCREEN (F11 y API): ocultar/mostrar sidebar ────── */
-(function initFullscreenHandler() {
+/* ── FULLSCREEN: ocultar sidebar ───────────────────────── */
+(function () {
+
+  var _sidebar  = null;
+  var _main     = null;
+  var _bar      = null;
+  var _fsActive = false;
+
+  function getEls() {
+    _sidebar = _sidebar || document.getElementById('sidebar');
+    _main    = _main    || document.getElementById('main');
+    _bar     = _bar     || document.getElementById('progress-bar');
+  }
+
+  function hide() {
+    getEls();
+    if (_fsActive) return;
+    _fsActive = true;
+    if (_sidebar) { _sidebar.style.cssText += ';transform:translateX(-280px)!important;visibility:hidden!important;'; }
+    if (_main)    { _main.style.marginLeft    = '0'; }
+    if (_bar)     { _bar.style.left           = '0'; }
+  }
+
+  function show() {
+    getEls();
+    if (!_fsActive) return;
+    _fsActive = false;
+    if (window.innerWidth < 900) return; /* mobile: already hidden by CSS */
+    if (_sidebar) { _sidebar.style.transform = ''; _sidebar.style.visibility = ''; }
+    if (_main)    { _main.style.marginLeft   = ''; }
+    if (_bar)     { _bar.style.left          = ''; }
+  }
 
   function onFSChange() {
-    const isFS = !!(
-      document.fullscreenElement       ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement    ||
-      document.msFullscreenElement
-    );
-
-    const sidebar = document.getElementById('sidebar');
-    const main    = document.getElementById('main');
-    const bar     = document.getElementById('progress-bar');
-
-    if (isFS) {
-      if (sidebar) { sidebar.style.transform = 'translateX(-280px)'; sidebar.style.visibility = 'hidden'; }
-      if (main)    { main.style.marginLeft   = '0'; }
-      if (bar)     { bar.style.left          = '0'; }
-    } else {
-      if (window.innerWidth >= 900) {
-        if (sidebar) { sidebar.style.transform = ''; sidebar.style.visibility = ''; }
-        if (main)    { main.style.marginLeft   = ''; }
-        if (bar)     { bar.style.left          = ''; }
-      }
-    }
+    var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    fs ? hide() : show();
   }
 
   document.addEventListener('fullscreenchange',       onFSChange);
@@ -461,12 +449,18 @@
   document.addEventListener('mozfullscreenchange',    onFSChange);
   document.addEventListener('MSFullscreenChange',     onFSChange);
 
-  /* Detectar F11 nativamente (solo Chrome/Edge lo reporta) */
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'F11') {
-      /* El navegador manejará la transición; el evento fullscreenchange lo captura */
-      setTimeout(onFSChange, 200);
-    }
-  });
+  /*  F11 no dispara fullscreenchange en todos los browsers.
+      Detectamos con un pequeño polling de tamaño de ventana. */
+  var _prevW = window.innerWidth;
+  var _prevH = window.innerHeight;
+  setInterval(function () {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    /* Si la ventana llenó toda la pantalla = fullscreen */
+    var isFS = (w === screen.width && h === screen.height);
+    if (isFS && !_fsActive) hide();
+    if (!isFS && _fsActive) show();
+    _prevW = w; _prevH = h;
+  }, 300);
 
 })();

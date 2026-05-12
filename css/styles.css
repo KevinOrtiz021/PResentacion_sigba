@@ -1970,202 +1970,209 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════
-   MEJORAS FINALES v4
+   MEJORAS FINALES v5 — TODO MÁS GRANDE EN PC Y TABLET
    ══════════════════════════════════════════════════════════ */
 
-/* ── MODO SIN SIDEBAR (clase que JS pone en <body>) ────────
-   Cuando el sidebar se oculta (F11 o botón) el main
-   ocupa toda la pantalla sin margen izquierdo.            */
-body.sidebar-hidden #sidebar {
-  transform: translateX(-280px) !important;
-  visibility: hidden !important;
-}
-body.sidebar-hidden #main {
-  margin-left: 0 !important;
-  transition: margin 0.3s ease;
-}
-body.sidebar-hidden #progress-bar {
-  left: 0 !important;
-}
+/* Cuando JS pone esta clase: sidebar oculto + main sin margen */
+body.sidebar-hidden #sidebar      { transform: translateX(-280px) !important; visibility: hidden !important; }
+body.sidebar-hidden #main         { margin-left: 0 !important; }
+body.sidebar-hidden #progress-bar { left: 0 !important; }
 
-/* ── PC y TABLET GRANDES (≥901px) ──────────────────────── */
-@media (min-width: 901px) {
+/* Fullscreen nativo (API) */
+:fullscreen          #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; }
+:-webkit-full-screen #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; }
+:fullscreen          #main    { margin-left: 0 !important; }
+:-webkit-full-screen #main    { margin-left: 0 !important; }
+:fullscreen          #progress-bar { left: 0 !important; }
+:-webkit-full-screen #progress-bar { left: 0 !important; }
+:fullscreen          #slides-area  { padding: 12px 24px 80px !important; max-width: 100% !important; }
+:-webkit-full-screen #slides-area  { padding: 12px 24px 80px !important; max-width: 100% !important; }
 
-  /* SLIDES AREA: sin máximo, padding generoso */
+/* ══════════════════════════════════════════════════════════
+   PC GRANDE (≥1025px) — MÁXIMO TAMAÑO
+   ══════════════════════════════════════════════════════════ */
+@media (min-width: 1025px) {
+
+  /* ÁREA PRINCIPAL: sin límite de ancho, padding mínimo */
   #slides-area {
-    padding: 28px 36px 80px;
-    max-width: 100%;
+    padding: 20px 28px 80px !important;
+    max-width: 100% !important;
   }
 
-  /* PORTADA: más alta */
-  .slide-cover {
-    min-height: 82vh;
-  }
+  /* ── PORTADA ──────────────────────────────────────────── */
+  .slide-cover          { min-height: 86vh; border-radius: 24px; }
+  .slide-cover-content  { padding: 72px 72px 52px; }
+  .cover-tag            { font-size: 12px; padding: 7px 18px; margin-bottom: 28px; }
+  .cover-title          { font-size: clamp(42px, 4.5vw, 64px); margin-bottom: 14px; }
+  .cover-subtitle       { font-size: 18px; line-height: 1.7; margin-bottom: 44px; max-width: 680px; }
+  .cover-meta           { gap: 36px; padding-top: 36px; }
+  .cover-meta-label     { font-size: 11px; letter-spacing: 1.2px; }
+  .cover-meta-value     { font-size: 15px; }
 
-  .slide-cover-content {
-    padding: 60px 60px 44px;
-  }
+  /* Badge SENA + QR */
+  .cover-sena-badge     { top: 40px; right: 56px; gap: 14px; }
+  .sena-logo-box        { width: 88px; height: 88px; border-radius: 18px; }
+  .sena-logo-box svg    { width: 56px; height: 56px; }
+  .cover-sena-badge > p { font-size: 10px; letter-spacing: 1.5px; }
+  .cover-qr-box         { padding: 14px 14px 10px; gap: 9px; border-radius: 16px; }
+  #cover-qr-canvas      { width: 160px !important; height: 160px !important; }
+  .cover-qr-label       { font-size: 9px; letter-spacing: 2px; }
 
-  .cover-tag      { margin-bottom: 26px; font-size: 11px; }
-  .cover-title    { font-size: clamp(32px, 3.5vw, 52px); }
-  .cover-subtitle { font-size: 16px; margin-bottom: 40px; max-width: 600px; }
-  .cover-meta     { gap: 32px; padding-top: 32px; }
-  .cover-meta-label { font-size: 11px; }
-  .cover-meta-value { font-size: 14px; }
+  /* ── TOPBAR ───────────────────────────────────────────── */
+  #topbar              { height: 68px; padding: 0 48px; }
+  #topbar h1           { font-size: 18px; }
+  .slide-counter       { font-size: 14px; padding: 6px 16px; }
+  .btn-qr              { padding: 10px 24px; font-size: 14px; border-radius: 24px; }
 
-  /* QR badge: posición y tamaño */
-  .cover-sena-badge {
-    top: 32px;
-    right: 44px;
-    gap: 12px;
-  }
+  /* ── SLIDES DE CONTENIDO ──────────────────────────────── */
+  .slide-content              { border-radius: 24px; }
+  .slide-content-header       { padding: 32px 56px; }
+  .slide-content-header h2    { font-size: 28px; }
+  .slide-content-body         { padding: 52px 56px; }
 
-  .sena-logo-box {
-    width: 80px;
-    height: 80px;
-  }
-  .sena-logo-box svg { width: 52px; height: 52px; }
+  /* ── SECCIÓN SEPARADORA ───────────────────────────────── */
+  .slide-section     { min-height: 380px; border-radius: 24px; }
+  .section-num       { font-size: 110px; }
+  .section-title     { font-size: clamp(38px, 5vw, 62px); }
+  .section-label     { font-size: 13px; letter-spacing: 3px; }
 
-  .cover-sena-badge > p {
-    font-size: 10px;
-    letter-spacing: 1.5px;
-  }
+  /* ── CARDS ────────────────────────────────────────────── */
+  .cards-grid        { gap: 24px; }
+  .card              { padding: 32px; border-radius: 18px; }
+  .card h3           { font-size: 17px; margin-bottom: 10px; }
+  .card p            { font-size: 15px; line-height: 1.7; }
+  .card-icon         { width: 54px; height: 54px; font-size: 24px; border-radius: 13px; margin-bottom: 18px; }
 
-  /* QR box más grande */
-  .cover-qr-box {
-    padding: 12px 12px 9px;
-    gap: 8px;
-    border-radius: 14px;
-  }
+  /* ── LISTAS ───────────────────────────────────────────── */
+  .styled-list       { gap: 16px; }
+  .styled-list li    { padding: 18px 24px; font-size: 16px; border-radius: 12px; }
 
-  /* SLIDES DE CONTENIDO */
-  .slide-content-header {
-    padding: 28px 48px;
-  }
-  .slide-content-header h2 {
-    font-size: 26px;
-  }
+  /* ── STAT BLOCKS ──────────────────────────────────────── */
+  .stat-block          { padding: 40px 28px; border-radius: 18px; }
+  .stat-block .stat-num   { font-size: 64px; }
+  .stat-block .stat-label { font-size: 14px; margin-top: 10px; }
 
-  .slide-content-body {
-    padding: 44px 48px;
-  }
+  /* ── TIMELINE ─────────────────────────────────────────── */
+  .timeline          { padding-left: 44px; }
+  .timeline-item     { padding-bottom: 36px; }
+  .timeline-item h4  { font-size: 17px; margin-bottom: 6px; }
+  .timeline-item p   { font-size: 15px; line-height: 1.7; }
 
-  /* CARDS */
-  .cards-grid { gap: 22px; }
-  .card       { padding: 28px; border-radius: 16px; }
-  .card h3    { font-size: 15px; margin-bottom: 10px; }
-  .card p     { font-size: 14px; line-height: 1.65; }
-  .card-icon  { width: 50px; height: 50px; font-size: 22px; margin-bottom: 16px; }
+  /* ── TABLA ────────────────────────────────────────────── */
+  .data-table th     { padding: 16px 24px; font-size: 14px; }
+  .data-table td     { padding: 14px 24px; font-size: 15px; }
 
-  /* LISTAS */
-  .styled-list     { gap: 14px; }
-  .styled-list li  { padding: 16px 22px; font-size: 15px; line-height: 1.6; }
+  /* ── TOC ──────────────────────────────────────────────── */
+  .toc-grid          { gap: 20px; }
+  .toc-item          { padding: 22px 28px; gap: 20px; border-radius: 16px; }
+  .toc-num           { width: 46px; height: 46px; font-size: 18px; }
+  .toc-text h4       { font-size: 16px; }
+  .toc-text p        { font-size: 13px; }
 
-  /* STAT BLOCKS */
-  .stat-block          { padding: 34px 24px; border-radius: 16px; }
-  .stat-block .stat-num   { font-size: 54px; }
-  .stat-block .stat-label { font-size: 13px; margin-top: 8px; }
+  /* ── QUOTE ────────────────────────────────────────────── */
+  .quote-block       { padding: 28px 36px; font-size: 18px; line-height: 1.8; border-radius: 0 16px 16px 0; }
 
-  /* SECCION SEPARADORA */
-  .slide-section  { min-height: 340px; }
-  .section-title  { font-size: clamp(30px, 4vw, 54px); }
-  .section-label  { font-size: 12px; }
+  /* ── TECH PILLS ───────────────────────────────────────── */
+  .tech-pill         { font-size: 14px; padding: 8px 18px; border-radius: 24px; }
 
-  /* TIMELINE */
-  .timeline       { padding-left: 40px; }
-  .timeline-item  { padding-bottom: 32px; }
-  .timeline-item h4 { font-size: 15px; margin-bottom: 6px; }
-  .timeline-item p  { font-size: 14px; }
+  /* ── FEATURE ITEMS ────────────────────────────────────── */
+  .feat-item         { padding: 20px 24px; gap: 18px; border-radius: 13px; }
+  .feat-icon         { width: 46px; height: 46px; font-size: 22px; border-radius: 10px; }
+  .feat-item strong  { font-size: 15px; }
+  .feat-item p       { font-size: 14px; }
 
-  /* TABLA */
-  .data-table th  { padding: 14px 20px; font-size: 13px; }
-  .data-table td  { padding: 13px 20px; font-size: 14px; }
+  /* ── IMPACT CARDS ─────────────────────────────────────── */
+  .impact-card       { padding: 30px 28px; border-radius: 18px; }
+  .impact-card h4    { font-size: 15px; margin-bottom: 10px; }
+  .impact-card p     { font-size: 15px; }
 
-  /* TOC */
-  .toc-grid  { gap: 18px; }
-  .toc-item  { padding: 20px 24px; gap: 18px; border-radius: 14px; }
-  .toc-num   { width: 42px; height: 42px; font-size: 16px; }
-  .toc-text h4 { font-size: 15px; }
-  .toc-text p  { font-size: 12px; }
+  /* ── TWO-COL ──────────────────────────────────────────── */
+  .two-col           { gap: 44px; }
 
-  /* FEATURE ITEMS */
-  .feat-item      { padding: 18px 22px; gap: 16px; }
-  .feat-icon      { width: 42px; height: 42px; font-size: 22px; }
-  .feat-item strong { font-size: 14px; }
-  .feat-item p    { font-size: 13px; }
+  /* ── ARCH BOX ─────────────────────────────────────────── */
+  .arch-box          { padding: 36px; gap: 22px; border-radius: 18px; }
+  .arch-layer        { padding: 20px 24px; border-radius: 13px; }
+  .arch-layer h4     { font-size: 14px; }
+  .arch-layer p      { font-size: 13px; }
 
-  /* IMPACT CARDS */
-  .impact-card    { padding: 28px 26px; border-radius: 16px; }
-  .impact-card h4 { font-size: 14px; margin-bottom: 10px; }
-  .impact-card p  { font-size: 14px; }
+  /* ── TEAM CARDS ───────────────────────────────────────── */
+  .team-card         { padding: 36px 24px; border-radius: 18px; }
+  .team-avatar       { width: 80px; height: 80px; font-size: 30px; border-radius: 50%; margin-bottom: 16px; }
+  .team-card h4      { font-size: 16px; }
+  .team-card p       { font-size: 13px; }
 
-  /* TWO-COL */
-  .two-col { gap: 40px; }
+  /* ── GEO STAT ─────────────────────────────────────────── */
+  .geo-stat-card     { padding: 24px 28px; border-radius: 16px; }
+  .geo-stat-num      { font-size: 40px; }
+  .geo-stat-label    { font-size: 13px; }
 
-  /* QUOTE */
-  .quote-block { padding: 24px 32px; font-size: 16px; line-height: 1.75; }
+  /* ── REF ITEMS ────────────────────────────────────────── */
+  .ref-item          { padding: 18px 24px; font-size: 14px; border-radius: 13px; }
 
-  /* ARCH BOX */
-  .arch-box   { padding: 32px; gap: 20px; border-radius: 16px; }
-  .arch-layer { padding: 18px 22px; }
-  .arch-layer h4 { font-size: 13px; }
-  .arch-layer p  { font-size: 12px; }
+  /* ── NAV ARROWS ───────────────────────────────────────── */
+  .btn-nav           { width: 52px; height: 52px; font-size: 22px; }
 
-  /* TEAM CARDS */
-  .team-card    { padding: 32px 20px; border-radius: 16px; }
-  .team-avatar  { width: 72px; height: 72px; font-size: 28px; margin-bottom: 14px; }
-  .team-card h4 { font-size: 15px; }
-  .team-card p  { font-size: 12px; }
-
-  /* TECH PILLS */
-  .tech-pill { font-size: 13px; padding: 7px 16px; }
-
-  /* REF ITEMS */
-  .ref-item { padding: 16px 22px; font-size: 13px; }
-
-  /* TOPBAR */
-  #topbar         { height: 62px; padding: 0 40px; }
-  #topbar h1      { font-size: 16px; }
-  .slide-counter  { font-size: 13px; padding: 5px 14px; }
-  .btn-qr         { padding: 9px 20px; font-size: 13px; }
-
-  /* FOOTER de sidebar */
-  .sidebar-footer p { font-size: 11px; }
+  /* ── CHIP ROW ─────────────────────────────────────────── */
+  .feat-chip         { font-size: 13px; padding: 7px 16px; }
 
 }
 
-/* ── TABLET MEDIANA (768px – 900px) ────────────────────── */
-@media (min-width: 768px) and (max-width: 900px) {
+/* ══════════════════════════════════════════════════════════
+   TABLET (768px – 1024px)
+   ══════════════════════════════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
   #slides-area {
-    padding: 20px 20px 80px;
+    padding: 18px 20px 80px !important;
+    max-width: 100% !important;
   }
-  .slide-cover        { min-height: 70vh; }
-  .slide-cover-content { padding: 44px 40px 32px; }
-  .cover-title        { font-size: clamp(26px, 4.5vw, 38px); }
-  .cover-subtitle     { font-size: 15px; }
-  .slide-content-body { padding: 32px; }
-  .cards-grid.cols-3  { grid-template-columns: repeat(2, 1fr); }
-  .cards-grid.cols-4  { grid-template-columns: repeat(2, 1fr); }
+
+  .slide-cover          { min-height: 74vh; border-radius: 20px; }
+  .slide-cover-content  { padding: 52px 52px 40px; }
+  .cover-tag            { font-size: 11px; margin-bottom: 22px; }
+  .cover-title          { font-size: clamp(30px, 4vw, 46px); }
+  .cover-subtitle       { font-size: 16px; margin-bottom: 36px; }
+  .cover-meta           { gap: 24px; padding-top: 28px; }
+  .cover-meta-value     { font-size: 14px; }
+
+  .cover-sena-badge     { top: 30px; right: 40px; gap: 12px; }
+  .sena-logo-box        { width: 76px; height: 76px; }
+  .cover-qr-box         { padding: 12px 12px 8px; }
+  #cover-qr-canvas      { width: 130px !important; height: 130px !important; }
+
+  #topbar               { height: 62px; padding: 0 36px; }
+  #topbar h1            { font-size: 16px; }
+  .slide-counter        { font-size: 13px; }
+  .btn-qr               { padding: 8px 18px; font-size: 13px; }
+
+  .slide-content-header { padding: 26px 44px; }
+  .slide-content-header h2 { font-size: 24px; }
+  .slide-content-body   { padding: 40px 44px; }
+
+  .slide-section        { min-height: 320px; }
+  .section-title        { font-size: clamp(30px, 4.5vw, 50px); }
+
+  .cards-grid           { gap: 20px; }
+  .card                 { padding: 26px; }
+  .card h3              { font-size: 15px; }
+  .card p               { font-size: 14px; }
+
+  .styled-list li       { padding: 16px 20px; font-size: 15px; }
+  .stat-block .stat-num { font-size: 52px; }
+  .data-table th        { padding: 14px 20px; }
+  .data-table td        { padding: 13px 20px; font-size: 14px; }
+  .toc-item             { padding: 18px 22px; }
+  .toc-text h4          { font-size: 15px; }
+  .timeline-item h4     { font-size: 15px; }
+  .timeline-item p      { font-size: 14px; }
+  .feat-item            { padding: 16px 20px; }
+  .impact-card          { padding: 26px; }
+  .quote-block          { font-size: 16px; padding: 22px 28px; }
+  .team-card            { padding: 28px 18px; }
+
 }
 
-/* ── FULLSCREEN CSS (soporte nativo) ───────────────────── */
-:fullscreen            #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; }
-:-webkit-full-screen   #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; }
-:-moz-full-screen      #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; }
-
-:fullscreen            #main    { margin-left: 0 !important; }
-:-webkit-full-screen   #main    { margin-left: 0 !important; }
-:-moz-full-screen      #main    { margin-left: 0 !important; }
-
-:fullscreen            #progress-bar { left: 0 !important; }
-:-webkit-full-screen   #progress-bar { left: 0 !important; }
-:-moz-full-screen      #progress-bar { left: 0 !important; }
-
-:fullscreen            #slides-area  { padding: 12px 20px 80px !important; max-width: 100% !important; }
-:-webkit-full-screen   #slides-area  { padding: 12px 20px 80px !important; max-width: 100% !important; }
-:-moz-full-screen      #slides-area  { padding: 12px 20px 80px !important; max-width: 100% !important; }
-
-/* ── QR EN PORTADA (base para todos los tamaños) ────────── */
+/* ── QR PORTADA — estilos base (mobile también) ──────────── */
 .cover-qr-box {
   background: rgba(255,255,255,0.08);
   border: 1.5px solid rgba(57,169,0,0.5);
@@ -2176,53 +2183,11 @@ body.sidebar-hidden #progress-bar {
   align-items: center;
   gap: 6px;
 }
-
-.cover-qr-box canvas {
-  border-radius: 6px;
-  display: block;
-  background: #fff;
-}
-
-.cover-qr-label {
-  font-size: 8px;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-}
-
-.cover-qr-url-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-}
-
-.cover-qr-url-input {
-  flex: 1;
-  min-width: 0;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(57,169,0,0.35);
-  border-radius: 5px;
-  padding: 3px 6px;
-  font-size: 9px;
-  font-family: monospace;
-  color: rgba(255,255,255,0.85);
-  outline: none;
-}
-.cover-qr-url-input:focus       { border-color: #39A900; }
+.cover-qr-box canvas        { border-radius: 6px; display: block; background: #fff; }
+.cover-qr-label             { font-size: 8px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+.cover-qr-url-row           { display: flex; align-items: center; gap: 4px; width: 100%; }
+.cover-qr-url-input         { flex: 1; min-width: 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(57,169,0,0.35); border-radius: 5px; padding: 3px 6px; font-size: 9px; font-family: monospace; color: rgba(255,255,255,0.85); outline: none; }
+.cover-qr-url-input:focus   { border-color: #39A900; }
 .cover-qr-url-input::placeholder { color: rgba(255,255,255,0.3); }
-
-.btn-cover-qr-gen {
-  width: 22px; height: 22px;
-  background: #39A900;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 13px;
-  cursor: pointer;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.btn-cover-qr-gen:hover { background: #2D8200; }
+.btn-cover-qr-gen           { width: 22px; height: 22px; background: #39A900; color: #fff; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.btn-cover-qr-gen:hover     { background: #2D8200; }

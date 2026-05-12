@@ -1968,73 +1968,204 @@ body {
   .cards-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
   .sena-logo-box img { width: 60px; height: 60px; }
 }
-/* ══════════════════════════════════════════════════════════
-   MEJORAS FINALES
-   ══════════════════════════════════════════════════════════ */
 
-/* ── PC y TABLET (≥901px): slides más grandes ────────────
-   Solo afecta pantallas donde el sidebar está visible.
-   El móvil (<900px) ya tiene sus propias reglas arriba y
-   no se toca nada de lo original.                         */
+/* ══════════════════════════════════════════════════════════
+   MEJORAS FINALES — PC y TABLET ≥901px
+   NO toca nada de mobile (max-width:900px ya definido)
+   ══════════════════════════════════════════════════════════ */
 @media (min-width: 901px) {
-  /* Slides: quitar max-width y reducir padding */
+
+  /* ── ÁREA DE SLIDES: ocupa todo el ancho, más respiro ── */
   #slides-area {
-    padding: 10px 10px 64px;
+    padding: 24px 32px 80px;
     max-width: 100%;
   }
 
-  /* Portada más alta */
+  /* ── PORTADA: más alta y con más margen interno ──────── */
   .slide-cover {
-    min-height: 76vh;
+    min-height: 80vh;
   }
 
-  /* Padding interno de la portada */
   .slide-cover-content {
-    padding: 38px 50px 32px;
+    padding: 64px 64px 48px;
   }
 
-  /* Headers y cuerpos de slides de contenido */
+  /* Más espacio entre elementos de portada */
+  .cover-tag        { margin-bottom: 28px; }
+  .cover-subtitle   { margin-bottom: 44px; }
+  .cover-meta       { gap: 28px; padding-top: 32px; }
+
+  /* ── QR en portada: más grande y con margen ─────────── */
+  .cover-sena-badge {
+    top: 36px;
+    right: 48px;
+    gap: 14px;
+  }
+
+  .cover-qr-box {
+    padding: 12px 12px 8px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  #cover-qr-canvas {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .cover-qr-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  /* ── SLIDES DE CONTENIDO: más padding en header/body ── */
   .slide-content-header {
-    padding: 22px 36px;
+    padding: 30px 48px;
+  }
+
+  .slide-content-header h2 {
+    font-size: 24px;
   }
 
   .slide-content-body {
-    padding: 28px 36px;
+    padding: 48px 48px;
   }
+
+  /* ── CARDS: más gap y padding interno ───────────────── */
+  .cards-grid {
+    gap: 24px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+
+  /* ── LISTAS ESTILIZADAS ──────────────────────────────── */
+  .styled-list {
+    gap: 14px;
+  }
+
+  .styled-list li {
+    padding: 16px 22px;
+    font-size: 15px;
+  }
+
+  /* ── STAT BLOCKS ─────────────────────────────────────── */
+  .stat-block {
+    padding: 36px 24px;
+  }
+
+  .stat-block .stat-num {
+    font-size: 56px;
+  }
+
+  /* ── SECCIÓN SEPARADORA ──────────────────────────────── */
+  .slide-section {
+    min-height: 360px;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4.5vw, 56px);
+  }
+
+  /* ── TIMELINE ────────────────────────────────────────── */
+  .timeline-item {
+    padding-bottom: 34px;
+  }
+
+  .timeline-item h4 { font-size: 15px; }
+  .timeline-item p  { font-size: 14px; }
+
+  /* ── TABLA ───────────────────────────────────────────── */
+  .data-table th { padding: 14px 20px; font-size: 13px; }
+  .data-table td { padding: 13px 20px; font-size: 14px; }
+
+  /* ── TOC ─────────────────────────────────────────────── */
+  .toc-grid { gap: 18px; }
+  .toc-item { padding: 20px 24px; gap: 18px; }
+  .toc-num  { width: 42px; height: 42px; font-size: 16px; }
+  .toc-text h4 { font-size: 15px; }
+  .toc-text p  { font-size: 12px; }
+
+  /* ── FEATURE ITEMS ───────────────────────────────────── */
+  .feat-item {
+    padding: 18px 20px;
+    gap: 16px;
+  }
+  .feat-item strong { font-size: 14px; }
+  .feat-item p      { font-size: 13px; }
+
+  /* ── IMPACT CARDS ────────────────────────────────────── */
+  .impact-card { padding: 28px; }
+  .impact-card h4 { font-size: 14px; }
+  .impact-card p  { font-size: 14px; }
+
+  /* ── TWO-COL ─────────────────────────────────────────── */
+  .two-col { gap: 40px; }
+
+  /* ── QUOTE ───────────────────────────────────────────── */
+  .quote-block {
+    padding: 24px 32px;
+    font-size: 16px;
+  }
+
+  /* ── ARCH BOX ────────────────────────────────────────── */
+  .arch-box { padding: 34px; gap: 20px; }
+  .arch-layer { padding: 18px 22px; }
+
+  /* ── TEAM CARDS ──────────────────────────────────────── */
+  .team-card { padding: 32px 20px; }
+  .team-avatar { width: 76px; height: 76px; font-size: 28px; margin-bottom: 16px; }
+  .team-card h4 { font-size: 15px; }
+  .team-card p  { font-size: 12px; }
+
+  /* ── TOPBAR: más generoso ────────────────────────────── */
+  #topbar {
+    height: 64px;
+    padding: 0 40px;
+  }
+
+  #topbar h1 { font-size: 17px; }
+
+  .slide-counter {
+    font-size: 13px;
+    padding: 5px 14px;
+  }
+
+  .btn-qr {
+    padding: 9px 20px;
+    font-size: 13px;
+  }
+
 }
 
-/* ── FULLSCREEN API (botón nativo del navegador o F11) ───
-   Cuando el browser entra en fullscreen, ocultar sidebar  */
-:fullscreen #sidebar            { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
-:-webkit-full-screen #sidebar   { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
-:-moz-full-screen #sidebar      { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
-:-ms-fullscreen #sidebar        { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+/* ── FULLSCREEN (F11 y API nativa) ──────────────────────── */
+:fullscreen            #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+:-webkit-full-screen   #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
+:-moz-full-screen      #sidebar { transform: translateX(-280px) !important; visibility: hidden !important; transition: none !important; }
 
-:fullscreen #main               { margin-left: 0 !important; }
-:-webkit-full-screen #main      { margin-left: 0 !important; }
-:-moz-full-screen #main         { margin-left: 0 !important; }
-:-ms-fullscreen #main           { margin-left: 0 !important; }
+:fullscreen            #main    { margin-left: 0 !important; }
+:-webkit-full-screen   #main    { margin-left: 0 !important; }
+:-moz-full-screen      #main    { margin-left: 0 !important; }
 
-:fullscreen #progress-bar       { left: 0 !important; }
-:-webkit-full-screen #progress-bar { left: 0 !important; }
-:-moz-full-screen #progress-bar { left: 0 !important; }
-:-ms-fullscreen #progress-bar   { left: 0 !important; }
+:fullscreen            #progress-bar { left: 0 !important; }
+:-webkit-full-screen   #progress-bar { left: 0 !important; }
+:-moz-full-screen      #progress-bar { left: 0 !important; }
 
-:fullscreen #slides-area        { padding: 8px 8px 64px !important; max-width: 100% !important; }
-:-webkit-full-screen #slides-area { padding: 8px 8px 64px !important; max-width: 100% !important; }
-:-moz-full-screen #slides-area  { padding: 8px 8px 64px !important; max-width: 100% !important; }
-:-ms-fullscreen #slides-area    { padding: 8px 8px 64px !important; max-width: 100% !important; }
+:fullscreen            #slides-area  { padding: 10px 16px 80px !important; max-width: 100% !important; }
+:-webkit-full-screen   #slides-area  { padding: 10px 16px 80px !important; max-width: 100% !important; }
+:-moz-full-screen      #slides-area  { padding: 10px 16px 80px !important; max-width: 100% !important; }
 
-/* ── QR EN PORTADA ───────────────────────────────────────  */
+/* ── QR EN PORTADA (base, todas las pantallas) ──────────── */
 .cover-qr-box {
   background: rgba(255,255,255,0.07);
   border: 1.5px solid rgba(57,169,0,0.45);
   border-radius: 12px;
-  padding: 8px 8px 6px;
+  padding: 10px 10px 7px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   cursor: default;
 }
 
@@ -2053,7 +2184,6 @@ body {
   font-weight: 700;
 }
 
-/* Input URL del QR en portada */
 .cover-qr-url-row {
   display: flex;
   align-items: center;
@@ -2078,12 +2208,12 @@ body {
 .cover-qr-url-input::placeholder { color: rgba(255,255,255,0.3); }
 
 .btn-cover-qr-gen {
-  width: 20px; height: 20px;
+  width: 22px; height: 22px;
   background: #39A900;
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;

@@ -1951,6 +1951,73 @@ body {
   }
 }
 
+/* ── MOBILE (≤900px) ───────────────────────────────────── */
+@media (max-width: 900px) {
+  #topbar {
+    padding: 0 12px;
+    height: 52px;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  /* Left side: menu + logo wrapper */
+  #topbar > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;       /* allow shrinking */
+    flex: 1;
+    overflow: hidden;
+  }
+
+  #topbar h1 {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1;
+    letter-spacing: 0;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Hide subtitle and separator — keep only "SIGBA" */
+  #topbar h1 .topbar-subtitle,
+  #topbar h1 .topbar-sep {
+    display: none;
+  }
+
+  .topbar-title-main {
+    white-space: nowrap;
+  }
+
+  /* Right side: counter + QR */
+  .topbar-right {
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .slide-counter {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  /* Hide QR button text, keep icon only */
+  .btn-qr {
+    padding: 6px 10px;
+    font-size: 0; /* hide text */
+    gap: 0;
+  }
+  .btn-qr svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ── MOBILE PEQUEÑO (≤480px) ───────────────────────────── */
 @media (max-width: 480px) {
   #topbar h1 {
     font-size: 13px;
@@ -1964,7 +2031,7 @@ body {
   }
 }
 
-/* Tablets 560-900 */
+/* ── TABLETS (560px – 900px) ───────────────────────────── */
 @media (min-width: 560px) and (max-width: 900px) {
   .cards-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
   .sena-logo-box img { width: 60px; height: 60px; }

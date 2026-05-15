@@ -296,7 +296,6 @@ body {
   overflow: hidden;
   position: relative;
   min-height: 540px;
-  min-width: 540px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -1833,8 +1832,6 @@ body {
   .two-col { grid-template-columns: 1fr; }
   .toc-grid { grid-template-columns: 1fr; }
   .slide-content-body { padding: 24px; }
-  .slide-cover-content { padding: 32px; }
-  .cover-sena-badge { top: 20px; right: 24px; }
   #slides-area { padding: 20px 16px 80px; }
 }
 
@@ -1875,14 +1872,101 @@ body {
   .sena-logo-box img { width: 88px; height: 88px; }
 }
 
-/* Small phones */
+/* ── PORTADA — CELULAR (≤767px) ────────────────────────── */
+@media (max-width: 767px) {
+  .slide-cover {
+    min-height: auto;
+    border-radius: 14px;
+  }
+
+  .slide-cover-content {
+    padding: 28px 20px 24px;
+  }
+
+  .cover-tag {
+    font-size: 9px;
+    padding: 4px 12px;
+    margin-bottom: 14px;
+    letter-spacing: 1.5px;
+  }
+
+  .cover-title {
+    font-size: clamp(22px, 7vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .cover-subtitle {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+
+  .cover-meta {
+    gap: 12px;
+    padding-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cover-meta-label { font-size: 9px; }
+  .cover-meta-value { font-size: 12px; }
+
+  /* Badge SENA: más pequeño y pegado al borde */
+  .cover-sena-badge {
+    top: 14px;
+    right: 14px;
+    gap: 6px;
+  }
+
+  .sena-logo-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+  }
+
+  .sena-logo-box svg  { width: 30px; height: 30px; }
+  .sena-logo-box img  { width: 36px; height: 36px; }
+
+  .cover-sena-badge > p { font-size: 7px; letter-spacing: 1px; }
+
+  /* QR más compacto */
+  .cover-qr-box {
+    padding: 8px 8px 6px;
+    gap: 5px;
+    border-radius: 10px;
+  }
+
+  #cover-qr-canvas { width: 80px !important; height: 80px !important; }
+  .cover-qr-label  { font-size: 7px; letter-spacing: 1px; }
+}
+
+/* ── PORTADA — CELULAR PEQUEÑO (≤400px) ────────────────── */
 @media (max-width: 400px) {
-  .cover-title { font-size: clamp(1.4rem, 7vw, 2.4rem); }
-  .slide-cover-content { padding: 20px 16px; }
-  .cover-sena-badge { top: 12px; right: 12px; }
-  .sena-logo-box img { width: 48px; height: 48px; }
-  #topbar h1 { font-size: 13px; }
-  #topbar h1 span { display: none; }
+  .slide-cover-content {
+    padding: 22px 14px 18px;
+  }
+
+  .cover-title {
+    font-size: clamp(19px, 7.5vw, 26px);
+  }
+
+  .cover-subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* Ocultar QR en pantallas muy pequeñas para no saturar */
+  .cover-qr-box { display: none; }
+
+  .sena-logo-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  .sena-logo-box svg  { width: 24px; height: 24px; }
+  .sena-logo-box img  { width: 28px; height: 28px; }
 }
 
 /* ── TOPBAR MOBILE FIX ─────────────────────────────────── */
